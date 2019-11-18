@@ -1,17 +1,13 @@
 class TasksController < ApplicationController
     before_action :require_user_logged_in 
-    before_action :correct_user, only:[:edit,:destroy]
-    before_action :set_task, only:[:edit,:update,:destroy]
+    before_action :correct_user, only:[:show,:edit,:destroy]
+    before_action :set_task, only:[:show,:edit,:update,:destroy]
     
     def index
         @tasks = current_user.tasks.order(id: :desc).page(params[:page]).per(7)
     end
     def show
-        if correct_user
-            set_task
-        else
-            redirect_to login_url
-        end
+         
     end
     def new
         @task = Task.new
